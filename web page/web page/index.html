@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OnestopNDT</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-light" style="background-color: white;">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <img src="assets/images/logo.png" alt="OnestopNDT Logo" width="150">
+        </a>
+    </div>
+</nav>
+
+<!-- Contact Form Section -->
+<section class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 shadow-lg p-4 rounded" style="background-color: white;">
+            <h2>Got any questions?</h2>
+            <p>Let’s discuss it over a cup of coffee.</p>
+            <form id="contactForm" action="php/formHandler.php" method="POST">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
+                        <div class="text-danger" id="nameError"></div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="orgName" class="form-label">Organization Name</label>
+                        <input type="text" class="form-control" id="orgName" name="orgName">
+                        <div class="text-danger" id="orgNameError"></div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                        <div class="text-danger" id="emailError"></div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="contact" class="form-label">Contact Number</label>
+                        <input type="text" class="form-control" id="contact" name="contact" required>
+                        <div class="text-danger" id="contactError"></div>
+                    </div>
+                    <div class="col-12 mb-3">
+                        <label for="message" class="form-label">Message</label>
+                        <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
+                        <div class="text-danger" id="messageError"></div>
+                    </div>
+                </div>
+                <div class="text-end">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+            <div id="formSuccess" class="alert alert-success mt-3 d-none">Form submitted successfully!</div>
+        </div>
+    </div>
+</section>
+
+<!-- Map Section with Overlayed Address -->
+<section class="container mt-5 position-relative">
+    <h3>OnestopNDT Location</h3>
+    <div class="map-container">
+        <!-- Overlayed Address Box -->
+        <div class="map-overlay text-light p-3" style="background-color: #1E3A8A;">
+            <h5>OnestopNDT</h5>
+            <p>Address: Rabale MIDC, Near Dell Electric Company, Rabale MIDC, Navi Mumbai - 400701</p>
+            <p>Landline: 022-431 0099</p>
+            <a href="#" class="btn btn-light btn-sm" target="_blank">Google Map Link</a>
+        </div>
+        <!-- Map Div -->
+        <div id="map" style="height: 400px;"></div>
+    </div>
+</section>
+
+<!-- Explore Section -->
+<section class="container mt-5">
+    <h3>Explore</h3>
+    <div class="row text-center">
+        <!-- Categories with Background Images -->
+        <div class="col-md-2">
+            <div class="explore-card" style="background-image: url('assets/images/company.jpg');">
+                <p>Companies</p>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="explore-card" style="background-image: url('assets/images/jobs.jpg');">
+                <p>Jobs</p>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="explore-card" style="background-image: url('assets/images/articles.jpg');">
+                <p>Articles</p>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="explore-card" style="background-image: url('assets/images/webinars.jpg');">
+                <p>Webinars</p>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="explore-card" style="background-image: url('assets/images/forums.jpg');">
+                <p>Forums</p>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="explore-card" style="background-image: url('assets/images/application_notes.jpg');">
+                <p>Application Notes</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="py-4 mt-5" style="background-color: #1E3A8A; color: white;">
+    <div class="container">
+        <div class="d-flex justify-content-end">
+            <img src="assets/images/footer-logo.png" alt="Footer Logo" width="100">
+        </div>
+        <hr style="border-color: white;">
+        <div class="d-flex justify-content-start">
+            <p>What is One Stop NDT?</p>
+        </div>
+    </div>
+</footer>
+
+<script src="js/script.js"></script>
+<script src="js/map.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBb0VTim45P5OqGnaigD35UGja0R9nFEL8&callback=initMap" async defer></script>
+
+<script>
+// Client-Side Form Validation and AJAX Request
+document.getElementById("contactForm").addEventListener("submit", function(event) {
+    event.preventDefault(); // Prevent form submission for AJAX
+
+    let errors = false;
+    const formData = new FormData(this);
+
+    // Clear previous error messages
+    document.querySelectorAll('.text-danger').forEach(function(errorDiv) {
+        errorDiv.innerHTML = '';
+    });
+
+    // Client-side validation
+    if (!document.getElementById('name').value) {
+        document.getElementById('nameError').innerHTML = 'Name is required';
+        errors = true;
+    }
+    if (!document.getElementById('email').value) {
+        document.getElementById('emailError').innerHTML = 'Email is required';
+        errors = true;
+    }
+    if (!document.getElementById('contact').value) {
+        document.getElementById('contactError').innerHTML = 'Contact number is required';
+        errors = true;
+    }
+    if (!document.getElementById('message').value) {
+        document.getElementById('messageError').innerHTML = 'Message is required';
+        errors = true;
+    }
+
+    if (errors) return; // Stop submission if there are errors
+
+    // Submit via AJAX to PHP
+    fetch('php/formHandler.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data); // Log to console to check response
+
+        if (data.status === 'success') {
+            document.getElementById('formSuccess').classList.remove('d-none');
+            setTimeout(function() {
+                document.getElementById('formSuccess').classList.add('d-none');
+            }, 5000);
+            document.getElementById("contactForm").reset();
+        } else if (data.status === 'error') {
+            for (let field in data.errors) {
+                document.getElementById(field + 'Error').innerHTML = data.errors[field];
+            }
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error); // Log any error in the AJAX request
+    });
+});
+</script>
+
+</body>
+</html>

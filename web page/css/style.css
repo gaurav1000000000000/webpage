@@ -1,0 +1,40 @@
+.map-container {
+    position: relative;
+}
+
+.map-overlay {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 250px;
+    background-color: #1E3A8A;
+    color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 15px;
+    z-index: 10;
+}
+
+.explore-card {
+    height: 120px;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    border-radius: 8px;
+}
+.explore-card p {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.footer-text {
+    flex: 1;
+}
+.footer-logo {
+    flex: 0;
+}
